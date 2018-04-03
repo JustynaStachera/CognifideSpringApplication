@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- PL -->
+    <meta charset="utf-8"/>
+    <title>CONGNIFIDE LIBRARY PAGE</title>
+    <meta value="description" content="subdescription"/>
+    <meta value="keywords" content="library, cognifide, application"/>
+    <!-- IE compatibility -->
+    <meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1"/>
+    <!-- optional -->
+    <meta value="author" content="Justyna Stachera"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Risque" rel="stylesheet"/>
+    <style>
+        .jumbotron {
+            background-color: #4D7A97;
+            font-family: 'Indie Flower', cursive;
+        }
+
+        .borderless td, .borderless th {
+            border: none !important;
+        }
+
+        .div-center {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .span-bold {
+            font-weight: bold;
+        }
+
+        .img-fixed {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="div-logo" class="jumbotron text-center">
+    <h1>BOOKS BY CATEGORY</h1>
+</div>
+<div id="div-container" class="container">
+    <div class="col-xs-4 col-xs-offset-4">
+        <form th:action="@{/api/book/sort/category}" method="post" th:object="${categoryName}">
+            <table class="table borderless">
+                <tr>
+                    <td>
+                        <label for="category"></label>
+                        <select id="category" class="col-xs-3 form-control" data-lived-search="true"
+                                th:field="*{field}">
+                            <!--<option selected disabled hidden>Choose category...</option>-->
+                            <option th:each="e : ${categories}"
+                                    th:value="${e}"
+                                    th:text="${e}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="btn btn-info" value="SORT" type="submit"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="col-xs-12">
+        <table class="table borderless" th:if="${books.size() > 0}">
+            <tr th:each="e : ${#numbers.sequence(0, books.size() - 1, 4)}">
+                <td class="col-md-3" th:if="${e < books.size()}">
+                    <div class="div-center col-xs-12">
+                        <div class="col-xs-12"><img class="img-fixed" th:src="${books.get(e).getThumbnailUrl()}"/></div>
+                        <div class="col-xs-12"><span class="span-bold" th:text="${books.get(e).getTitle()}"></span></div>
+                    </div>
+                    <div class="div-center col-xs-12" th:text="${'RATING: ' + books.get(e).getAverageRating()}"></div>
+                    <div class="div-center col-xs-12" th:text="${'PUBLICATION DATE: ' + books.get(e).getPublishedDateConv()}"></div>
+                </td>
+                <td class="col-md-3" th:if="${(e + 1) < books.size()}">
+                    <div class="div-center col-xs-12">
+                        <div class="col-xs-12"><img class="img-fixed" th:src="${books.get(e + 1).getThumbnailUrl()}"/></div>
+                        <div class="col-xs-12"><span class="span-bold" th:text="${books.get(e + 1).getTitle()}"></span></div>
+                    </div>
+                    <div class="div-center col-xs-12" th:text="${'RATING: ' + books.get(e + 1).getAverageRating()}"></div>
+                    <div class="div-center col-xs-12" th:text="${'PUBLICATION DATE: ' + books.get(e + 1).getPublishedDateConv()}"></div>
+                </td>
+                <td class="col-md-3" th:if="${(e + 2) < books.size()}">
+                    <div class="div-center col-xs-12">
+                        <div class="col-xs-12"><img class="img-fixed" th:src="${books.get(e + 2).getThumbnailUrl()}"/></div>
+                        <div class="col-xs-12"><span class="span-bold" th:text="${books.get(e + 2).getTitle()}"></span></div>
+                    </div>
+                    <div class="div-center col-xs-12" th:text="${'RATING: ' + books.get(e + 2).getAverageRating()}"></div>
+                    <div class="div-center col-xs-12" th:text="${'PUBLICATION DATE: ' + books.get(e + 2).getPublishedDateConv()}"></div>
+                </td>
+                <td class="col-md-3" th:if="${(e + 3) < books.size()}">
+                    <div class="div-center col-xs-12">
+                        <div class="col-xs-12"><img class="img-fixed" th:src="${books.get(e + 3).getThumbnailUrl()}"/></div>
+                        <div class="col-xs-12"><span class="span-bold" th:text="${books.get(e + 3).getTitle()}"></span></div>
+                    </div>
+                    <div class="div-center col-xs-12" th:text="${'RATING: ' + books.get(e + 3).getAverageRating()}"></div>
+                    <div class="div-center col-xs-12" th:text="${'PUBLICATION DATE: ' + books.get(e + 3).getPublishedDateConv()}"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
